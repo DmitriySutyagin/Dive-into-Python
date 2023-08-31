@@ -14,3 +14,4 @@ def _bin(a, b):
 a = int(input('Enter the number: '))
 b = int(input('Enter the value of the string representation of the number '))
 print(_bin(a, b))
+print(hex(a))
