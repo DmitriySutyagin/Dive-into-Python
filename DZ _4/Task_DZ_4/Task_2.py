@@ -2,11 +2,19 @@
 # Если ключ не хешируем, используйте его строковое представление.
 
 
+def slovar(**a):
+    d = {k: str(v) for k, v in a.items()}
 
-# def slovar(*, a, b):
-    # return {b : a}
+    e = {}
+ 
+    for key, value in d.items():
+        if value in e:
+            e[value].append(key)
+        else:
+            e[value] = [key]
+        
+            
+    return e
 
 
-c, *_ = input('Enter a nember and a value separated by a space: ').split()
-print(c, *_)
-# slovar()
+print(slovar(chemistry=5, Biology=3, Physics=5, Mathematics=4))
