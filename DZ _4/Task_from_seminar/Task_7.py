@@ -10,6 +10,7 @@ BALANS = 10
 MIN_ = - 1_000_000
 MAX_ = 1_000_000
 
+
 def bizness(firm: list[str]):
     for i in firm:
         a = [random.randint(MIN_, MAX_) for i in range(BALANS)]
@@ -21,8 +22,9 @@ def bizness(firm: list[str]):
         return True
     else:
         return False 
-    
-       
+
+
     return e
+
 
 print(bizness(firm))
