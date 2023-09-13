@@ -20,88 +20,133 @@ print('Доброго времени суток! Вам доступны опе�
 print('Если вы хотите пополнить, снять или завершить сеанс. Наберите пополнить и сумма пополнение, снять и сумма снятия или выход')
 
 
-def ATM_machine():
+def ATM_machine(balans, count, entrance, withdrawal_):
 
-    """ The function simulates the operation of an ATM """
-
-    global exit_from_the_program
-    global relenishment
-    global withdrawal
-    global balans 
-    global count
+    relenishment_of_the_client = str(input('Введите название операции: '))       # Ввод команды
     
-    while balans >= 0:
-        if balans > MAX_LIMIT:
-            balans = balans - balans * TAX_ON_WEALTH
-            print(f'Удержан налог на богаство в размере 10% и равен:{balans * TAX_ON_WEALTH}')
-            print(f'Баланс равен:{balans}')
 
-        relenishment_of_the_client = str(input('Введите название операции: '))
+    if  relenishment_of_the_client in exit_from_the_program:    # Выход
+        return exit('Работа банкомата завершена')
+    
+    replenishment_amount = int(input('Введите сумму операции: '))       # Ввод суммы
 
-        if  relenishment_of_the_client in exit_from_the_program:
-            print('Работа банкомата завершена')
-            break
+ 
+    def relenishment_(relenishment_of_the_client, replenishment_amount):
 
-        replenishment_amount = int(input('Введите сумму операции: '))
-
-        if replenishment_amount < MIN_WITHDRAWAL_AND_RELENISHMENT:
-            print('Сумма пополнения и снятия кратны 50 у.е.')
-            print(f'Баланс равен:{balans}')
-            continue
-
-        elif relenishment_of_the_client in relenishment:   # Пополнить
-            count += 1
-            balans = balans + replenishment_amount
-            print(f'Баланс равен:{balans}')
+        global balans
+        global count
+        global entrance
         
-            if count % EVERY_THIRD_OPERATION == 0:
-                balans = balans + balans * INTEREST_FOR_OPERATIONS
-                print(f'Начислен процент по счету за операции: {round(balans * INTEREST_FOR_OPERATIONS, DIGITS_AFTER_THE_COMMA)}')
-                print(f'Баланс равен:{balans}')
-                continue
+        if relenishment_of_the_client in relenishment and replenishment_amount % MIN_WITHDRAWAL_AND_RELENISHMENT == 0:   # Пополнить
+        
+           
+                    
 
-        elif relenishment_of_the_client in withdrawal:    # Снять
-            count += 1
-            if replenishment_amount > balans:
-                print('Нельзя снять больше чем на счете')
-                print(f'Баланс равен:{balans}')
-                continue
-            else:
-                balans = balans - replenishment_amount
-                if replenishment_amount * WITHDRAWAL_PERCENTAGE < MIN_WITHDRAWAL:
-                    balans = balans - MIN_WITHDRAWAL
-                    print('Удержан процент за снятие  в размере 1.5% от суммы снятия, но не менее 30 и не более 600 у.е.')
-                    print(f'Процент снятия равен: {MIN_WITHDRAWAL}')
-                    print(f'Баланс равен:{balans}')
 
-                elif replenishment_amount * WITHDRAWAL_PERCENTAGE > MAX_WITHDRAWAL:
-                    balans = balans - MAX_WITHDRAWAL
-                    print('Удержан процент за снятие  в размере 1.5% от суммы снятия, но не менее 30 и не более 600 у.е.')
-                    print(f'Процент снятия равен: {MAX_WITHDRAWAL}')
-                    print(f'Баланс равен:{balans}')
+            if balans  > MAX_LIMIT:
+                
 
-                else:
-                    balans = balans - balans * WITHDRAWAL_PERCENTAGE  
-                    print('Удержан процент за снятие  в размере 1.5% от суммы снятия, но не менее 30 и не более 600 у.е.')
-                    print(f'Процент снятия равен: {replenishment_amount * WITHDRAWAL_PERCENTAGE}')
-                    print(f'Баланс равен:{balans}')            
-            
+                count += 1
+                nalog = balans * TAX_ON_WEALTH
+                balans = balans - balans * TAX_ON_WEALTH
+               
                 if count % EVERY_THIRD_OPERATION == 0:
                     balans = balans + balans * INTEREST_FOR_OPERATIONS
-                    print(f'Начислен процент по счету за операции: {round(balans * INTEREST_FOR_OPERATIONS, DIGITS_AFTER_THE_COMMA)}')
-                    print(f'Баланс равен:{balans}')
-                    continue
-  
-    else:
+                    return f'Начислен процент по счету за операции: {(balans * INTEREST_FOR_OPERATIONS):.2f} ' \
+                        f'Удержан налог на богаство в размере 10% и равен:{nalog:.2f} Баланс равен:{balans:.2f}', entrance
+                return f'Удержан налог на богаство в размере 10% и равен:{nalog:.2f} Баланс равен:{balans:.2f}', entrance
+            
+            if MAX_LIMIT > balans>= 0:
+                
+                count += 1
+                balans = balans + replenishment_amount
+                entrance.append(replenishment_amount)
 
-        quit()
+                if count % EVERY_THIRD_OPERATION == 0:
+                    balans = balans + balans * INTEREST_FOR_OPERATIONS
+                    return f'Баланс равен:{balans:.2f}. Начислен процент по счету за операции: {(balans * INTEREST_FOR_OPERATIONS):.2f}', entrance
+                return f'Баланс равен:{balans:.2f}', entrance
+                
+               
+        if relenishment_of_the_client in withdrawal and replenishment_amount % MIN_WITHDRAWAL_AND_RELENISHMENT == 0:    # Снять
+            count += 1
+            if replenishment_amount > balans:             # Нельзя снять больше чем на счете
+                return f'Нельзя снять больше чем на счете Баланс равен:{balans}'
+            else:
+                if replenishment_amount * WITHDRAWAL_PERCENTAGE < MIN_WITHDRAWAL:
+                    withdrawal_.append(replenishment_amount)
+                    balans = balans - MIN_WITHDRAWAL - replenishment_amount
+                    return 'Удержан процент за снятие  в размере 1.5% от суммы снятия, но не менее 30 и не более 600 у.е.' '\n'\
+                            f'Процент снятия равен: {MIN_WITHDRAWAL}' '\n'\
+                            f'Баланс равен:{balans:.2f}' '\n'\
+                            f'{withdrawal_}'
+                    
+                elif replenishment_amount * WITHDRAWAL_PERCENTAGE > MAX_WITHDRAWAL:
+                    withdrawal_.append(replenishment_amount)
+                    balans = balans - MAX_WITHDRAWAL - replenishment_amount
+                    return 'Удержан процент за снятие  в размере 1.5% от суммы снятия, но не менее 30 и не более 600 у.е.' '\n'\
+                            f'Процент снятия равен: {MAX_WITHDRAWAL}' '\n'\
+                            f'Баланс равен:{balans:.2f}', withdrawal_
+                            
+
+
+                else:
+                    withdrawal_.append(replenishment_amount)
+                    balans = balans - balans * WITHDRAWAL_PERCENTAGE  
+                              
+                    
+            
+            if count % EVERY_THIRD_OPERATION == 0:
+                    if balans  > MAX_LIMIT: 
+                        nalog = balans * TAX_ON_WEALTH
+                        balans = balans - balans * TAX_ON_WEALTH
+                        return f'Начислен процент по счету за операции: {(balans * INTEREST_FOR_OPERATIONS):.2f}' '\n'\
+                            f'Баланс равен:{(balans + balans * INTEREST_FOR_OPERATIONS):.2f}''\n'\
+                            'Удержан процент за снятие  в размере 1.5% от суммы снятия, но не менее 30 и не более 600 у.е.' '\n'\
+                            f'Процент снятия равен: {(replenishment_amount * WITHDRAWAL_PERCENTAGE):.2f}' '\n'\
+                            f'Удержан налог на богаство в размере 10% и равен:{nalog:.2f}.' '\n'\
+                            f'Баланс равен:{balans:.2f}', withdrawal_   
+                    else:
+                        return f'Начислен процент по счету за операции: {(balans * INTEREST_FOR_OPERATIONS):.2f}' f'Баланс равен:{(balans + balans * INTEREST_FOR_OPERATIONS):.2f}'
+                
+            if balans  > MAX_LIMIT: 
+                    nalog = balans * TAX_ON_WEALTH
+                    balans = balans - balans * TAX_ON_WEALTH
+                    return f'Удержан налог на богаство в размере 10% и равен:{nalog:.2f}.' '\n'\
+                       'Удержан процент за снятие  в размере 1.5% от суммы снятия, но не менее 30 и не более 600 у.е.' '\n'\
+                       f'Процент снятия равен: {(replenishment_amount * WITHDRAWAL_PERCENTAGE):.2f}' '\n'\
+                       f'Баланс равен:{balans:.2f}',withdrawal_ 
+                
+           
+                
+
+            
+        else:
+            if balans  > MAX_LIMIT: 
+                nalog = balans * TAX_ON_WEALTH
+                balans = balans - balans * TAX_ON_WEALTH
+                return f'Сумма пополнения и снятия кратны 50 y.e. Удержан налог на богаство в размере 10% и равен:{nalog:.2f} Баланс равен:{balans:.2f}'
+            else:
+                return f'Сумма пополнения и снятия кратны 50 y.e. Баланс равен:{balans:.2f}'
+        
 
 
 
+        return f'Баланс равен:{balans:.2f}' '\n'\
+                f'{entrance}' '\n'\
+                f'{withdrawal_}'
+                
+    
+    print(relenishment_(relenishment_of_the_client, replenishment_amount))
+                    
+    return ATM_machine(balans, count, entrance, withdrawal_)
 
-exit_from_the_program = ['Выход', 'выход', 'выхот', 'ВЫХОТ', 'Выхот']
-relenishment = ['Пополнить', 'пополнить', 'ПОПОЛНИТЬ', 'ПОПОЛНИТ', 'Пополнит', 'ПАПОЛНИТЬ', 'ПАПОЛНИТ', 'паполнить', 'паполнит']
-withdrawal = ['Снять', 'снять', 'снят', 'Снят']
+
+exit_from_the_program = 'Выход', 'выход', 'выхот', 'ВЫХОТ', 'Выхот', 'ds[jl', 'Ds[jl'
+relenishment = 'Пополнить', 'пополнить', 'ПОПОЛНИТЬ', 'ПОПОЛНИТ', 'Пополнит', 'ПАПОЛНИТЬ', 'ПАПОЛНИТ', 'паполнить', 'паполнит', 'gjgjkybnm', 'Gjgjkybnm'
+withdrawal = 'Снять', 'снять', 'снят', 'Снят'
 balans = 0
 count = 0
-ATM_machine()
+entrance = []
+withdrawal_= []
+print(ATM_machine(balans, count, entrance, withdrawal_))
