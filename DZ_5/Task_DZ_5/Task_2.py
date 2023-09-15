@@ -9,14 +9,8 @@
 name = ['Денис', 'Фёдор', 'Артур', 'Любовь','Евгения','Сергей']
 stavka = [10_000, 30_000, 5_000, 20_000, 15_000, 7_000]
 premiya = ['10.25%', '15.00%', '20.00%', '5.00%', '7.00%', '30.00%']
-int_premiya = []
-# premiya = list(map(float, premiya))
-# for i in premiya:
-#     int_premiya = list(map(int, premiya))
-for i in premiya:
-    int_premiya.append(int[premiya(i)])
-   
 
 
+zp = {k:v for k, v  in zip(name, [a*b for a, b in zip(stavka, [(float(i.replace('%','')))/100 for i in premiya])])}
 
-print(int_premiya)
+print(zp)
