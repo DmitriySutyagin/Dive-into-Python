@@ -19,4 +19,5 @@ fib_digit = int(input('Enter number: '))
 a = fibonachi(fib_digit)
 while fib_digit != 0:
     print(next(a))   
-    fib_digit =-1         # Функция next() применена для демострации решения
+    fib_digit =-1 
+                            # Функция next() применена для демострации решения
