@@ -11,3 +11,30 @@
 # 3.Соберите из созданных на уроке и в рамках домашнего задания функций пакет для работы с файлами.
 # Решить задачи, которые не успели решить на семинаре.
 
+import os
+import random as rnd
+
+
+print(os.getcwd())
+# os.mkdir('d:/Mytraining/Dive_into_Python/DZ_7/Task_DZ_7/Work_dir')
+PATH = 'd:/Mytraining/Dive_into_Python/DZ_7/Task_DZ_7/Work_dir'
+
+def renameming(number_of_file, source_extensions: list[str]):
+    res = []
+    for _ in range(number_of_file):
+        name_files = ''.join(chr(rnd.randint(97, 122)) for i in range(rnd.randint(4, 7)))
+        file_extension = rnd.choice(source_extensions)
+        res.append(f'{name_files}.{file_extension}')
+        for file in res:
+            with open(file, 'w', encoding='UTF-8'):
+                pass
+    return res
+                                
+
+
+list_of_source_extensions = ['doc', 'docx', 'pdf', 'xls', 'xlsx', 'zip', 'rar', 'jpg', 'png', 'mp3', 'wav', 'mp4', 'avi', 'txt']
+
+
+if __name__ == '__main__':
+    
+    print(renameming(10, list_of_source_extensions))
