@@ -17,7 +17,7 @@ import random as rnd
 
 print(os.getcwd())
 # os.mkdir('d:/Mytraining/Dive_into_Python/DZ_7/Task_DZ_7/Work_dir')
-PATH = 'd:/Mytraining/Dive_into_Python/DZ_7/Task_DZ_7/Work_dir'
+
 
 def renameming(number_of_file, source_extensions: list[str]):
     res = []
