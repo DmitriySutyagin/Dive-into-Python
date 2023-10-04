@@ -20,10 +20,10 @@ def create_file(file_extension: str, number_of_files: int, min_len: int, max_len
         res.append(f'{name_files}.{file_extension}')
         for file in res:
             with open(file, 'wb') as f:
-                f.seek(rnd.randint(min_bytes, max_bytes))
+                f.truncate(rnd.randint(min_bytes, max_bytes))
     return res
         
        
-
-
-print(create_file('txt', 42, 6, 30, 256, 4096))
+if __name__ == '__main__':
+    
+    print(create_file('txt', 42, 6, 30, 256, 4096))
