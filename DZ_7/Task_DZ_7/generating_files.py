@@ -19,7 +19,7 @@ print(os.getcwd())
 # os.mkdir('d:/Mytraining/Dive_into_Python/DZ_7/Task_DZ_7/Work_dir')
 
 
-def renameming(number_of_file, source_extensions: list[str]):
+def renameming(number_of_file: int, source_extensions: list[str]):
     res = []
     for _ in range(number_of_file):
         name_files = ''.join(chr(rnd.randint(97, 122)) for i in range(rnd.randint(4, 7)))
