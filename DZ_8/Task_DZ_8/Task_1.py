@@ -13,33 +13,31 @@ import csv
 import pickle
 
 
-def bypas(path: str, dict_: dict)-> None:
+# os.mkdir('D:\Mytraining\Storage_file')
+os.chdir('D:\Mytraining\Storage_file')
 
+
+def bypas(path: str, res: list)-> None:
 
     for path_dir, name_dir, name_file in os.walk(path):
-        # print(f"{path_dir=},{name_dir=},{name_file=}")
-        
-        for folder in name_dir:
-            if os.path.isdir(path+'\\'+folder):
-                # print(os.path.isdir(path+'\\'+folder) )
-                # print(dict_.get(f'{folder}'))
+        res.append({'path_dir': path_dir, 
+                    'folder':f'{os.path.split(path_dir)[1]}, {os.path.isdir(path_dir)}',
+                    'file': name_file,
+                    'size': os.path.getsize(path_dir)})
+     
+ 
+res= []
 
-                # bypas(path+'\\'+folder, dict_)
-                print(dict_.setdefault(folder, {folder:os.listdir(path+'\\'+folder)}))
-                
-
-            elif os.path.isfile(path+'\\'+folder):
-                bypas(path+'\\'+folder, dict_)
-                
-    return             
-                
-         
+bypas("D:\Mytraining\Excel", res)
 
 
+with open('json_file.json', 'w', encoding='utf-8') as j:
+    json_file = json.dump(res, j, ensure_ascii=False,indent=2)
 
+with open('csv_file.csv', 'w', encoding='utf-8') as c:
+    csv_file = csv.DictWriter(c, fieldnames=res[0].keys())
+    csv_file.writeheader()
+    csv_file.writerows(res)
 
-
-dict_  = {}
-path = "D:\Mytraining\Excel"
-print(bypas(path, dict_))
-
+with open("pickle_pickle.pickle", "wb") as pickle_file:
+    pickle.dump(res, pickle_file)
