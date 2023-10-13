@@ -20,10 +20,14 @@ os.chdir('D:\Mytraining\Storage_file')
 def bypas(path: str, res: list)-> None:
 
     for path_dir, name_dir, name_file in os.walk(path):
-        res.append({'path_dir': path_dir, 
-                    'folder':f'{os.path.split(path_dir)[1]}, {os.path.isdir(path_dir)}',
-                    'file': name_file,
-                    'size': os.path.getsize(path_dir)})
+        for file in name_file:
+            res.append({'path_dir': path_dir, 
+                        'folder':os.path.split(path_dir)[1], 
+                        'is_folder' : os.path.isdir(path_dir),
+                        'size_folder' : os.path.getsize(path_dir),
+                        'file': file,
+                        'is_file': os.path.isfile(path_dir+'\\'+file),
+                        'size_file': os.path.getsize(path_dir+'\\'+file)})
      
  
 res= []
