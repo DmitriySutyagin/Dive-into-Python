@@ -88,9 +88,6 @@ def find_roots(file_name: str='csv_file_3.csv', a: int=1, b: int=1, c: int=1):
 find_roots()  
 
 
-
-
-
 with open("__init__.py", "w") as init:
     list_of_function = write_to_code.split(',')
     for i in list_of_function:
