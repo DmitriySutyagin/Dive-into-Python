@@ -41,6 +41,8 @@ class Rectangle:
 
     def area(self):
         return self.width * self.height
+    
+ 
 
     def __add__(self, other):
         perimeter = self.perimeter() + other.perimeter()
