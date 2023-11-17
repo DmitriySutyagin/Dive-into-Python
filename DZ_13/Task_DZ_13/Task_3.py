@@ -77,8 +77,4 @@ class Employee(Person):
         self.ID = ID
         
     def get_level(self):
-<<<<<<< HEAD
         return sum(int(i) for i in str(self.ID)) % self.DELITEL
-=======
-        return sum(int(i) for i in str(self.ID)) % self.DELITEL
->>>>>>> 47a3a36ba574c4b25f3f7ae975bca15c34a7d416
