@@ -163,8 +163,5 @@ def test_subtraction_same_perimeter():
     assert r3.height == -2
 
 
-
-
-
 if __name__ == '__main__':
     pytest.main(["--no-header", '-q', "--durations=0", __file__])
