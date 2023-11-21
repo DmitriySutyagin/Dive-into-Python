@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\My training\github\Immersion in Python\DZ_14\venv_Task_DZ_14
+set VIRTUAL_ENV=D:\Mytraining\Dive_into_Python\DZ_14\venv_Task_DZ_14
 
 if not defined PROMPT set PROMPT=$P$G
 

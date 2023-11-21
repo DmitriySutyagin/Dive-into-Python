@@ -1,62 +1,12 @@
-# Вам предоставлен код на Python из предыдущих задач, который содержит два класса: Rectangle и NegativeValueError.
-
-# Ваша задача - написать набор тестов для класса Rectangle, чтобы убедиться, что он работает правильно и обрабатывает некорректные значения.
-
-# test_width: Тестирование инициализации ширины.
-# Создайте объект Rectangle с шириной 5 и убедитесь, что ширина установлена правильно.
-
-# test_height: Тестирование инициализации ширины и высоты.
-# Создайте объект Rectangle с шириной 3 и высотой 4 и убедитесь, что высота установлена правильно.
-
-# test_perimeter: Тестирование вычисления периметра. 
-# Создайте объект Rectangle с шириной 5 и вычислите его периметр (должен быть равен 20).
-
-# test_area: Тестирование вычисления площади.
-# Создайте объект Rectangle с шириной 3 и высотой 4 и вычислите его площадь (должна быть равна 12).
-
-# test_addition: Тестирование операции сложения двух прямоугольников. 
-# Создайте два объекта Rectangle с ширинами 5 и 3, и высотами 1 и 4 соответственно.
-# Произведите операцию сложения и убедитесь, что полученный прямоугольник имеет правильные значения ширины и высоты.
-
-# test_negative_width: Тестирование инициализации отрицательной ширины.
-# Попробуйте создать объект Rectangle с отрицательной шириной (-5) и убедитесь, что это вызывает исключение NegativeValueError.
-
-# test_negative_height: Тестирование инициализации отрицательной высоты. 
-# Попробуйте создать объект Rectangle с шириной 5 и отрицательной высотой (-4) и убедитесь, что это вызывает исключение NegativeValueError.
-
-# test_set_width: Тестирование изменения ширины. 
-# Создайте объект Rectangle с шириной 5 и измените его ширину на 10. Убедитесь, что ширина изменена правильно.
-
-# test_set_negative_width: Тестирование изменения отрицательной ширины.
-# Создайте объект Rectangle с шириной 5 и попробуйте изменить его ширину на отрицательное значение (-10).
-# Убедитесь, что это вызывает исключение NegativeValueError.
-
-# test_set_height: Тестирование изменения высоты.
-# Создайте объект Rectangle с шириной 3 и высотой 4 и измените его высоту на 6. 
-# Убедитесь, что высота изменена правильно.
-
-# test_set_negative_height: Тестирование изменения отрицательной высоты. 
-# Создайте объект Rectangle с шириной 3 и высотой 4 и попробуйте изменить его высоту на отрицательное значение (-6). 
-# Убедитесь, что это вызывает исключение NegativeValueError.
-
-# test_subtraction: Тестирование операции вычитания двух прямоугольников.
-# Создайте два объекта Rectangle с ширинами 10 и 3, и высотами 1 и 4 соответственно. 
-# Произведите операцию вычитания и убедитесь, что полученный прямоугольник имеет правильные значения ширины и высоты.
-
-# test_subtraction_negative_result: Тестирование операции вычитания с отрицательным результатом.
-# Создайте два объекта Rectangle с ширинами 3 и 10, и высотами 4 и 1 соответственно. 
-# Попробуйте выполнить операцию вычитания и убедитесь, что это вызывает исключение NegativeValueError.
-
-# test_subtraction_same_perimeter: Тестирование операции вычитания с одинаковым периметром.
-# Создайте два объекта Rectangle с ширинами 5 и 4, и высотами 1 и 3 соответственно.
-# Произведите операцию вычитания и убедитесь, что полученный прямоугольник имеет правильные значения ширины и высоты.
 import pytest
+
 
 class NegativeValueError(ValueError):
     pass
 
 
 class Rectangle:
+
     def __init__(self, width, height=None):
         if width <= 0:
             raise NegativeValueError(f'Ширина должна быть положительной, а не {width}')
@@ -109,5 +59,112 @@ class Rectangle:
         perimeter = self.perimeter() - other.perimeter()
         height = perimeter / 2 - width
         return Rectangle(width, height)
+    
+    
+def test_width():
+    """ Тестирование инициализации ширины. """
+    r1 = Rectangle(5)
+    assert r1.width == 5
 
-# Введите ваше решение ниже
+
+def test_height():
+    """ Тестирование инициализации ширины и высоты.  """
+    r1 = Rectangle(3, 4)
+    assert r1.height == 4
+
+
+def test_perimeter():
+    """  Тестирование вычисления периметра. """
+    r1 = Rectangle(5)
+    assert r1.perimeter() == 20
+
+
+def test_area():
+    """  Тестирование вычисления площади. """
+    r1 = Rectangle(3, 4)
+    assert r1.area() == 12
+
+
+def test_addition():
+    """ Тестирование операции сложения двух прямоугольников.  """
+    r1 = Rectangle(5, 3)
+    r2 = Rectangle(1,4)
+    r3 = r1 + r2
+    assert r3.width == 6
+    assert r3.height == 8.0
+
+
+def test_negative_width():
+    """  Тестирование инициализации отрицательной ширины. """
+    with pytest.raises(NegativeValueError) as e:
+        r1 = Rectangle(-5)
+    assert e
+
+
+def test_negative_height():
+    """ Тестирование инициализации отрицательной высоты. """
+    with pytest.raises(NegativeValueError) as e:
+        r1 = Rectangle(5, -4)
+    assert e
+
+
+def test_set_width():
+    """ Тестирование изменения ширины. """  
+    r1 = Rectangle(5)
+    r1.width = 10
+    assert r1.width == 10
+
+
+def test_set_negative_width():
+    """  Тестирование изменения отрицательной ширины.  """
+    r1 = Rectangle(5)
+    with pytest.raises(NegativeValueError) as e:
+        r1.width = -10
+    assert e
+
+
+def test_set_height():
+    """  Тестирование изменения высоты. """
+    r1 = Rectangle(3, 4)
+    r1.height = 6
+    assert r1.height == 6
+
+
+def test_set_negative_height():
+    """ Тестирование изменения отрицательной высоты.  """
+    r1 = Rectangle(3, 4)
+    with pytest.raises(NegativeValueError) as e:
+        r1.height = -6
+    assert e
+
+
+def test_subtraction():
+    """  Тестирование операции вычитания двух прямоугольников.   """
+    r1 = Rectangle(10, 1)
+    r2 = Rectangle(3, 4)
+    with pytest.raises(NegativeValueError) as e:
+        r3 = r1 - r2
+    assert e
+
+
+def test_subtraction_negative_result():
+    """  Тестирование операции вычитания с отрицательным результатом. """
+    r1 = Rectangle(3, 4)
+    r2 = Rectangle(10, 1)
+    r3 = r1 - r2
+
+
+def test_subtraction_same_perimeter():
+    """ Тестирование операции вычитания с одинаковым периметром.  """
+    r1 = Rectangle(5, 1)
+    r2 = Rectangle(4, 3)
+    r3 = r1 - r2
+    assert r3.width == 1
+    assert r3.height == -2
+
+
+
+
+
+if __name__ == '__main__':
+    pytest.main(["--no-header", '-q', "--durations=0", __file__])
