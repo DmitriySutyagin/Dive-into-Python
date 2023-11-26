@@ -5,9 +5,11 @@
 # "Незачет" ставится, если Слушатель не выполнил задание.
 # Критерии оценивания: 1 - Слушатель написал корректный код для задачи, добавил к ним логирование ошибок и полезной информации.
 
+from sys import argv
 import logging
 import os
 import argparse
+
 
 os.chdir('D:\Mytraining\Dive_into_Python\DZ_15\Task_DZ_15')
 
@@ -16,19 +18,9 @@ FORMAT = '{levelname:<8} - {asctime}. В модуле "{name}" ' \
 'в строке {lineno:03d} функция "{funcName}()" ' \
 'в {created} секунд записала сообщение: {msg}'
 
-logging.basicConfig(format=FORMAT, style='{', filename='Final_work.log', filemode='w', encoding='utf-8', level=logging.INFO)
+
+logging.basicConfig(format=FORMAT, style='{', filename='Final_work.log', encoding='utf-8', level=logging.INFO)
 logger = logging.getLogger(__name__)
-
-
-def pars():
-    parser = argparse.ArgumentParser(prog='Final_work.log',
-                                     epilog='str -> float',
-                                     description='This module converts a string to a real number.')
-    parser.add_argument('-w', '--weidth', default=0, help='Rectangle width')
-    parser.add_argument('-h', '--height', default=0, help='Rectangle height')
-    print('--width', '--heght')
-    args = parser.parse_args()
-    return Rectangle(args.width, args.height)
 
 
 class NegativeValueError(ValueError):
@@ -200,5 +192,8 @@ class Rectangle:
 
     
 if __name__ == '__main__':
-    
-    print(pars(args1, args2))
+    parser = argparse.ArgumentParser(description='Solving quadratic equations')
+    parser.add_argument('-a', metavar='a', type=float, help='enter a b c separated by a space', default=0)
+    parser.add_argument('-b', metavar='b', type=float, help='enter a b c separated by a space', default=0)
+    args = parser.parse_args()
+    Rectangle(args.a, args.b)
