@@ -194,6 +194,6 @@ class Rectangle:
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Solving quadratic equations')
     parser.add_argument('-a', metavar='a', type=float, help='enter a b c separated by a space', default=0)
-    parser.add_argument('-b', metavar='b', type=float, help='enter a b c separated by a space', default=0)
+    parser.add_argument('-b', metavar='b', type=float, help='enter a b c separated by a space')
     args = parser.parse_args()
     Rectangle(args.a, args.b)
